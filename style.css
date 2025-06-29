@@ -80,3 +80,27 @@ section, article, footer {
 footer {
   text-align: center;
 }
+#calculator-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#calculator-form label {
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+}
+
+#calculator-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#result {
+  margin-top: 20px;
+  font-weight: 600;
+}
