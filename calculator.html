@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FIRE Calculator – FIREStack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>FIRE Calculator</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </nav>
+    <p>Estimate how much you could have saved by retirement.</p>
+  </header>
+  <section>
+    <h2>Enter Your Details</h2>
+    <form id="calculator-form">
+      <label>Current Age
+        <input type="number" id="current-age" min="0" required />
+      </label>
+      <label>Retirement Age
+        <input type="number" id="retirement-age" min="1" required />
+      </label>
+      <label>Current Savings ($)
+        <input type="number" id="current-savings" min="0" step="0.01" required />
+      </label>
+      <label>Monthly Contribution ($)
+        <input type="number" id="monthly-contribution" min="0" step="0.01" required />
+      </label>
+      <label>Expected Annual Return (%)
+        <input type="number" id="annual-return" min="0" step="0.1" required />
+      </label>
+      <button type="submit" class="cta-button">Calculate</button>
+    </form>
+    <p id="result"></p>
+  </section>
+  <footer>
+    <p><a href="index.html">Back to Home</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('calculator-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const age = parseFloat(document.getElementById('current-age').value);
+      const retireAge = parseFloat(document.getElementById('retirement-age').value);
+      const current = parseFloat(document.getElementById('current-savings').value);
+      const monthly = parseFloat(document.getElementById('monthly-contribution').value);
+      const annualReturn = parseFloat(document.getElementById('annual-return').value) / 100;
+
+      const months = (retireAge - age) * 12;
+      if (months <= 0) {
+        document.getElementById('result').textContent = 'Retirement age must be greater than current age.';
+        return;
+      }
+
+      const monthlyReturn = annualReturn / 12;
+      let futureValue = current * Math.pow(1 + monthlyReturn, months);
+      if (monthlyReturn === 0) {
+        futureValue += monthly * months;
+      } else {
+        futureValue += monthly * ((Math.pow(1 + monthlyReturn, months) - 1) / monthlyReturn);
+      }
+
+      document.getElementById('result').textContent =
+        'Estimated savings at retirement: $' + futureValue.toFixed(2);
+    });
+  </script>
+</body>
+</html>
